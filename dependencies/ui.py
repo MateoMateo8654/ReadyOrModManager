@@ -15,7 +15,6 @@ from PyQt5.QtGui import QDragEnterEvent, QDropEvent
 from PyQt5.QtWidgets import QTabWidget
 from dependencies import filemanagment
 from dependencies import profiles
-from dependencies import session
 from dependencies import config
 
 
