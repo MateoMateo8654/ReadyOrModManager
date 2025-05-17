@@ -389,17 +389,21 @@ class ModManagerApp(QWidget):
             msg.setWindowTitle("RoM Installer")
             msg.setText(
                 "Please Select the Paks folder of your ReadyOrNot Installation\r\n for most users this will be: C:\Program Files (x86)\Steam\steamapps\common\Ready Or Not\ReadyOrNot\Content\Paks")
-            msg.setStandardButtons(QMessageBox.Ok)
+            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
             msg.setWindowFlags(msg.windowFlags() | Qt.WindowStaysOnTopHint)
             msg.activateWindow()
             msg.raise_()
-            msg.exec_()
+            result = msg.exec_()
+            if result == QMessageBox.Cancel:
+                print("User cancelled the prompt.")
+                return  # Exit the function gracefully
 
             RoN_Path = Path(
-                filedialog.askdirectory(title="Please Selcet the Pak Folder Of Your Ready or Not installation")) / "RoM"
+                filedialog.askdirectory(
+                    title="Please Selcet the Pak Folder Of Your Ready or Not installation")) / "RoM"
             if str(Path("ReadyOrNot/Content/Paks")) in str(RoN_Path):
                 valid_path = True
-            config.set("RoN_Path",str(RoN_Path))
+            config.set("RoN_Path", str(RoN_Path))
 
     def uninstall(self):
         reply = QMessageBox.question(
