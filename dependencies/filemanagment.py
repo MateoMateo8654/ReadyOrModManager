@@ -12,9 +12,6 @@ import json
 
 MODS_FOLDER = Path.home() / "Documents" / "RoM" / "Mods"
 
-def test(test1:str, test2:list[str]):
-    pass
-
 
 def delete_mod(name):
     file = MODS_FOLDER / name
