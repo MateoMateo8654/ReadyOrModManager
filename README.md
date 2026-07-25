@@ -1,5 +1,9 @@
 # Ready or Mod Manager
 
+## Rewrite and Linux compatibility is planned for end of 2026!
+
+---
+
 Take full control of your *Ready or Not* modding experience with this intuitive and lightweight mod manager. Easily add mods by dragging and dropping them into the application. Use the built-in mod selector to activate or deactivate mods, and organize them into custom profiles tailored to different playstyles or scenarios. The manager also supports drag-and-drop of `.zip` and `.7z` archives, automatically extracting and recognizing `.pak` files.
 
 Switching between mod setups is quick and straightforward. With export and import functionality, you can back up or synchronize your mod collections across systems or share them with others. You can also launch the game directly from the manager, eliminating the need for manual file handling.
