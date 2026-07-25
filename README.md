@@ -1,6 +1,7 @@
 # Ready or Mod Manager
 
 ## Rewrite and Linux compatibility is planned for end of 2026!
+I created a Discord Server for bug reports, update notifications, and feature requests. It's quite empty currently feel free to join. https://discord.gg/P9Zm4rsqCX
 
 ---
 
