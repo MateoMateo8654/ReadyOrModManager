@@ -1,12 +1,26 @@
 use std::path::PathBuf;
+use std::sync::LazyLock;
 
-use eframe::egui::{self, Context, Id, Modal, RichText, Ui};
+use eframe::egui::{
+    self, Context, Id, Label, Modal, RichText, ScrollArea, TextStyle, TextWrapMode, Ui,
+};
 use rom_core::apply::{ApplyFailure, ApplyInProgress};
 use rom_core::migration::V1Install;
 use rom_core::profiles::Profile;
 use rust_i18n::t;
 
 use crate::errors;
+
+/// The app's own license followed by every bundled third-party license, so the
+/// binary carries its notices on its own. Regenerate the third-party part with
+/// `cargo about` (see README) after changing dependencies.
+pub const LICENSES: &str = concat!(
+    include_str!("../../../LICENSE"),
+    "\n\n",
+    include_str!("../assets/THIRD_PARTY_LICENSES.txt"),
+);
+
+static LICENSE_LINES: LazyLock<Vec<&str>> = LazyLock::new(|| LICENSES.lines().collect());
 
 pub enum Dialog {
     AskUpdateCheck,
@@ -40,6 +54,7 @@ pub enum Dialog {
         program: Option<PathBuf>,
         data: Option<PathBuf>,
     },
+    Licenses,
 }
 
 pub struct Switch {
@@ -57,7 +72,10 @@ impl Dialog {
     pub fn show(&mut self, ctx: &Context) -> Option<Choice> {
         let mut choice = None;
         Modal::new(Id::unique("rom_dialog")).show(ctx, |ui| {
-            ui.set_max_width(440.0);
+            ui.set_max_width(match self {
+                Dialog::Licenses => 720.0,
+                _ => 440.0,
+            });
             choice = self.contents(ui);
         });
         choice
@@ -174,8 +192,41 @@ impl Dialog {
                 ui.label(t!("dialog.delete_profile_body", name = &profile.name));
                 buttons(ui, t!("dialog.delete"), t!("common.keep"))
             }
+            Dialog::Licenses => licenses(ui),
         }
     }
+}
+
+fn licenses(ui: &mut Ui) -> Option<Choice> {
+    ui.heading(t!("dialog.licenses_title"));
+    ui.label(t!("dialog.licenses_body"));
+    ui.add_space(4.0);
+    let row_height = ui.text_style_height(&TextStyle::Monospace);
+    let max_height = ui.ctx().content_rect().height() * 0.6;
+    ScrollArea::both()
+        .max_height(max_height)
+        .auto_shrink(false)
+        .show_rows(ui, row_height, LICENSE_LINES.len(), |ui, rows| {
+            ui.spacing_mut().item_spacing.y = 0.0;
+            for line in &LICENSE_LINES[rows] {
+                let text = if line.is_empty() { " " } else { line };
+                ui.add(Label::new(RichText::new(text).monospace()).wrap_mode(TextWrapMode::Extend));
+            }
+        });
+    ui.add_space(8.0);
+    let mut choice = None;
+    ui.horizontal(|ui| {
+        if ui.button(t!("dialog.licenses_copy")).clicked() {
+            ui.ctx().copy_text(LICENSES.to_owned());
+        }
+        if ui
+            .button(RichText::new(t!("common.close")).strong())
+            .clicked()
+        {
+            choice = Some(Choice::No);
+        }
+    });
+    choice
 }
 
 fn name_field(ui: &mut Ui, name: &mut String, error: &Option<String>) -> Option<Choice> {
@@ -209,4 +260,38 @@ fn buttons(ui: &mut Ui, yes: impl Into<String>, no: impl Into<String>) -> Option
         }
     });
     choice
+}
+
+#[cfg(test)]
+mod tests {
+    use super::LICENSES;
+
+    #[test]
+    fn licenses_start_with_the_apps_own_license() {
+        assert!(LICENSES.starts_with("Ready or Mod Manager ©"));
+        assert!(LICENSES.contains("CC BY-NC 4.0"));
+    }
+
+    #[test]
+    fn licenses_cover_direct_dependencies_and_fonts() {
+        for name in [
+            "eframe",
+            "egui",
+            "rusqlite",
+            "zip",
+            "sevenz-rust2",
+            "tar",
+            "ureq",
+            "rfd",
+            "rust-i18n",
+            "epaint_default_fonts",
+        ] {
+            assert!(
+                LICENSES.contains(&format!("  - {name} ")),
+                "{name} is missing from assets/THIRD_PARTY_LICENSES.txt, regenerate it with cargo about"
+            );
+        }
+        assert!(LICENSES.contains("SIL Open Font License"));
+        assert!(LICENSES.contains("Ubuntu Font Licence"));
+    }
 }

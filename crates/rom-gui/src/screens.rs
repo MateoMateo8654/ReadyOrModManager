@@ -228,6 +228,9 @@ impl Main {
                 actions.push(Action::SetUpdateCheck(check));
             }
             ui.weak(t!("settings.version", version = update::CURRENT_VERSION));
+            if ui.button(t!("settings.licenses")).clicked() {
+                actions.push(Action::ShowLicenses);
+            }
 
             ui.add_space(16.0);
             ui.heading(t!("settings.remove"));
