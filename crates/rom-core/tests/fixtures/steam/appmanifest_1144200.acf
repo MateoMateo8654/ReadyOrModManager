@@ -1,0 +1,18 @@
+"AppState"
+{
+	"appid"		"1144200"
+	"universe"		"1"
+	"name"		"Ready or Not"
+	"StateFlags"		"4"
+	"installdir"		"Ready Or Not"
+	"LastUpdated"		"1700000000"
+	"SizeOnDisk"		"75000000000"
+	"InstalledDepots"
+	{
+		"1144201"
+		{
+			"manifest"		"1234567890"
+			"size"		"75000000000"
+		}
+	}
+}
