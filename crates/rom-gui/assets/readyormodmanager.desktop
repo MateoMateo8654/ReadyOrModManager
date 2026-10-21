@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Ready Or Mod Manager
+Comment=Install and switch Mods for Ready Or Not
+Exec=rom-gui
+Icon=readyormodmanager
+Categories=Game;Utility;
+StartupWMClass=readyormodmanager
