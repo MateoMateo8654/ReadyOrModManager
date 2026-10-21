@@ -1,0 +1,24 @@
+[package]
+name = "rom-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+thiserror.workspace = true
+rusqlite.workspace = true
+dirs.workspace = true
+open.workspace = true
+ureq.workspace = true
+semver.workspace = true
+serde_json.workspace = true
+zip.workspace = true
+sevenz-rust2.workspace = true
+tar.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.56"
+
+[dev-dependencies]
+tempfile.workspace = true

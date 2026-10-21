@@ -1,0 +1,21 @@
+[package]
+name = "rom-gui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+rom-core.workspace = true
+eframe.workspace = true
+rust-i18n.workspace = true
+open.workspace = true
+rfd.workspace = true
+dirs.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+rusqlite.workspace = true
+
+[build-dependencies]
+winresource = "0.1"
