@@ -94,6 +94,14 @@ I am a single developer that trys to maintain this project in my free time in be
 
 ---
 
+## License
+
+Ready or Mod Manager is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/), see [LICENSE](LICENSE). Release builds include third-party libraries and fonts under their own licenses; see [THIRD_PARTY_LICENSES.html](THIRD_PARTY_LICENSES.html).
+
+Ready or Mod Manager is not affiliated with or endorsed by VOID Interactive. *Ready or Not* is a trademark of its respective owner.
+
+---
+
 ## Building from source
 
 Requires a recent stable [Rust](https://rustup.rs) toolchain (edition 2024).
@@ -103,6 +111,13 @@ cargo build --release -p rom-gui
 ```
 
 The binary is written to `target/release/rom-gui` (`rom-gui.exe` on Windows). Run the tests with `cargo test`.
+
+After changing dependencies, regenerate the third-party license list (ship it with every release):
+
+```sh
+cargo install cargo-about --locked --features cli
+cargo about generate --all-features about.hbs -o THIRD_PARTY_LICENSES.html
+```
 
 The workspace has two crates:
 
