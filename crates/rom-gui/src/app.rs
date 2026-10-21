@@ -58,6 +58,7 @@ pub enum Action {
     Review(Step),
     DeleteAllMods,
     UninstallApp,
+    ShowLicenses,
     DropIgnored,
 }
 
@@ -314,6 +315,7 @@ impl Main {
                 program: program_file(),
                 data: rom_core::db::Database::default_dir().ok(),
             }),
+            Action::ShowLicenses => self.dialogs.push_back(Dialog::Licenses),
             Action::ExportProfile => self.export_profile(ctx),
             Action::ExportAll => self.export_all(ctx),
             Action::Import => {
@@ -755,7 +757,8 @@ impl Main {
             | Dialog::RenameProfile { .. }
             | Dialog::DeleteProfile(_)
             | Dialog::DeleteAllMods { .. }
-            | Dialog::UninstallApp { .. } => {}
+            | Dialog::UninstallApp { .. }
+            | Dialog::Licenses => {}
         }
     }
 

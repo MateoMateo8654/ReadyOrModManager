@@ -25,6 +25,7 @@ error.not_game_folder: "“%{path}” is not a Ready or Not folder (it has no Re
 error.game_not_detected: "Ready or Not was not found in any Steam library. Choose its folder by hand."
 
 common.cancel: "Cancel"
+common.close: "Close"
 common.dismiss: "Dismiss"
 common.keep: "Keep"
 common.retry: "Retry"
@@ -156,6 +157,10 @@ settings.import: "Import…"
 settings.updates: "Updates"
 settings.update_check: "Check for a new version on startup"
 settings.version: "Version %{version}"
+settings.licenses: "Licenses…"
+dialog.licenses_title: "Licenses"
+dialog.licenses_body: "Ready Or Mod Manager and the third-party software it includes are used under these licenses."
+dialog.licenses_copy: "Copy all"
 
 update.available: "Ready Or Mod Manager %{version} is available."
 update.open_release: "Open release page"
